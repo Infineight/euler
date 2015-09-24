@@ -1,0 +1,75 @@
+<script>
+function addBigInt(n1, n2) {
+    var sa, ba, l, i, c = 0, r = "", t;
+    if(n1.length < n2.length) {
+        sa = n1.split("");
+        ba = n2.split("");
+    }
+    else {
+        sa = n2.split("");
+        ba = n1.split("");
+    }
+    l = sa.length;
+    for(i=0; i<l; i++) {
+        t = (+sa.pop() + +ba.pop() + +c).toString();
+        c = (t.length > 1)? 1: 0;
+        t = t.substr(t.length - 1, 1);
+        r = t + r;
+    }
+    if(c == 1)
+        switch(ba.length) {
+            case 1:
+                ba[ba.length - 1] = (+ba[ba.length - 1] + +c).toString();
+                break;
+            case 0:
+                r = (c == 0)? r: "1" + r;
+                break;
+            default:
+                if(ba[ba.length - 1] == "9") {
+                    ba[ba.length - 2] = (+ba[ba.length - 2] + +c).toString();
+                    ba[ba.length - 1] = "0";
+                }
+                else
+                    ba[ba.length - 1] = (+ba[ba.length - 1] + +c).toString();
+        }
+    r = ba.join("") + r;
+    return r;
+}
+
+function multBigInt(n1, n2) {
+    var sa, ba, i, c = 0, r = "", t = [], a, b;
+    if(n1.length < n2.length) {
+        sa = n1.split("");
+        ba = n2.split("");
+    }
+    else {
+        sa = n2.split("");
+        ba = n1.split("");
+    }
+    for(i=sa.length-1; i>=0; i--) {
+        for(b=ba.length-1; b>=0; b--) {
+            a = ((+sa[i] * +ba[b]) + +c).toString();
+            c = (a.length > 1)? a.substr(0, 1): 0;
+            a = a.substr(a.length - 1, 1);
+            r = a + r;
+        }
+        r = (+c > 0)? c + r: r;
+        for(c=(sa.length-1)-i; c>0; c--)
+            r += "0";
+        t.push(r);
+        r = "";
+    }
+    r = "0";
+    for(i=0; i<t.length; i++)
+        r = addBigInt(r, t[i]);
+    return r;
+}
+r = "1";
+for(i=100; i>0; i--)
+    r = multBigInt(i.toString(), r);
+a = r.split("");
+r = "0";
+for(i=0; i<a.length; i++)
+    r = addBigInt(r, a[i]);
+document.write(r);
+</script>

@@ -1,0 +1,12 @@
+<script language="javascript">
+  var a, b, c;
+  for(a = 335; a<1000; a++) {
+    for(b = parseInt(((1000-a)/2)+1); b < a; b++) {
+      c = 1000 - (a + b);
+      if(c < 1)
+        break;
+      if((b*b) + (c*c) == (a*a))
+        document.write(a+" * "+b+" * "+c+" = "+(a*b*c)+"<br />");
+    }
+  }
+</script>

@@ -1,0 +1,48 @@
+<script>
+function addBigInt(n1, n2) {
+   var sa, ba, l, i, c = 0, r = "", t;
+   if(n1.length < n2.length) {
+       sa = n1.split("");
+       ba = n2.split("");
+   }
+   else {
+       sa = n2.split("");
+       ba = n1.split("");
+   }
+   l = sa.length;
+   for(i=0; i<l; i++) {
+       t = (+sa.pop() + +ba.pop() + +c).toString();
+       c = (t.length > 1)? 1: 0;
+       t = t.substr(t.length - 1, 1);
+       r = t + r;
+   }
+   if(c == 1)
+       switch(ba.length) {
+           case 1:
+               ba[ba.length - 1] = (+ba[ba.length - 1] + +c).toString();
+               break;
+           case 0:
+               r = (c == 0)? r: "1" + r;
+               break;
+           default:
+               if(ba[ba.length - 1] == "9") {
+                   ba[ba.length - 2] = (+ba[ba.length - 2] + +c).toString();
+                   ba[ba.length - 1] = "0";
+               }
+               else
+                   ba[ba.length - 1] = (+ba[ba.length - 1] + +c).toString();
+       }
+   r = ba.join("") + r;
+   return r;
+}
+
+a = "1";
+b = "1";
+c = "1";
+for(var i = 2; b.length < 1000;i++) {
+    c = b;
+    b = addBigInt(a, b);
+    a = c;
+}
+document.write(i);
+</script>
