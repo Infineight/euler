@@ -1,0 +1,27 @@
+<script>
+  var path_length = 4;
+  var spiders = [1];
+  console.log(spiders);
+  var half_length;
+  // path iteration loop (spread)
+  for(var pi = 0; pi < path_length; pi++) {
+    if(spiders.length == 1) {
+      spiders.splice(0, 0, 1);
+    } else {
+      // split the spiders
+      for(var i = 0; i < spiders.length; i++) {
+        half_length = spiders.length / 2;
+        if(spiders.length > 1) {
+          // spiders join their buddies and then double
+          spiders[i] += spiders[i + (i < half_length? -1: +1)];
+          //spiders.splice(i, 0, spiders[i++]);
+        }
+        console.log(spiders);
+      }
+      spiders.splice(0, 0, 1);
+      spiders.splice(spiders.length - 1, 0, 1);
+    }
+    console.log(spiders);
+    console.log("break");
+  }
+</script>
