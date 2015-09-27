@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <script>
+
+  var start = new Date().getTime();
+
+  function sum_proper_divisors(n) {
+
+    // first get the root, because that will be the largest small divisor of a pair
+    var square_root = parseInt(Math.sqrt(n));
+
+    // everything is divisable by 1, duh, so we'll assume this and start our sum at 1
+    var sum = 1;
+
+    // start incrementing with 1 to check every number from 3 to the root
+    var delta = 1;
+
+    // if the number isn't divisable by 2 then it's not going to be divisible by any even number
+    if(n > 2 && n % 2 == 0) {
+
+      sum += 2;
+
+      if(n / 2 != 2) {
+
+        sum += n / 2;
+
+      }
+
+    } else {
+
+      delta = 2;
+
+    }
+
+    for(var i = 3; i <= square_root; i += delta) {
+
+      if(n % i == 0) {
+
+        sum += i;
+
+        // add on the opposing factor, unless it's the root of the number
+        if(n / i != i) {
+
+          sum += n / i;
+
+        }
+
+      }
+
+    }
+
+    return sum;
+
+  }
+
+  var results = [];
+  var answer = 0;
+
+  for(var n = 1; n < 10000; n++) {
+
+    tmp = sum_proper_divisors(n);
+    // we don't care about prime numbers and numbers with a sum that equals themself, they're sooo not amicable
+    if(tmp > 1 && n != tmp) {
+
+      results[n] = tmp;
+      if(typeof results[tmp] != 'undefined' && results[tmp] == n) {
+
+        answer += n + tmp;
+
+      }
+
+    }
+
+  }
+
+  document.write("answer: " + answer + "<br>");
+
+  var end = new Date().getTime();
+  document.write("<br><br><small>Script took "+(end - start)+" milliseconds ("+((end - start) / 1000)+" seconds)</small>");
+
+  </script>
+</body>
+</html>
