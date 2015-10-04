@@ -1,27 +1,35 @@
 <script>
-  var path_length = 4;
-  var spiders = [1];
-  console.log(spiders);
-  var half_length;
+  var path_length = 20;
+  var spiders = [1, 1];
+  var post_sum;
+  var tmp;
   // path iteration loop (spread)
-  for(var pi = 0; pi < path_length; pi++) {
-    if(spiders.length == 1) {
-      spiders.splice(0, 0, 1);
-    } else {
-      // split the spiders
-      for(var i = 0; i < spiders.length; i++) {
-        half_length = spiders.length / 2;
-        if(spiders.length > 1) {
-          // spiders join their buddies and then double
-          spiders[i] += spiders[i + (i < half_length? -1: +1)];
-          //spiders.splice(i, 0, spiders[i++]);
-        }
-        console.log(spiders);
+  for(var pil = 0; pil < path_length - 1; pil++) {
+    post_sum = true;
+    for(var i = 0; i < spiders.length; i++) {
+      if(post_sum) {
+        spiders[i] += spiders[i+1];
+      } else {
+        spiders[i] = spiders[i-1];
       }
-      spiders.splice(0, 0, 1);
-      spiders.splice(spiders.length - 1, 0, 1);
+      post_sum = !post_sum;
     }
-    console.log(spiders);
-    console.log("break");
+    // add the outside spiders last
+    spiders.splice(0, 0, 1);
+    spiders.splice(spiders.length, 0, 1);
   }
+  // path iteration loop (merge)
+  while(spiders.length > 1) {
+    for(var i = 0; i < spiders.length; i++) {
+      if(i == 0 || i == spiders.length - 2) {
+        spiders[i] += spiders [i+1];
+        spiders.splice(i+1, 1);
+      } else {
+        spiders[i] += spiders[i+1];
+        spiders[i+1] = spiders[i];
+        i++;
+      }
+    }
+  }
+  console.log(spiders);
 </script>
